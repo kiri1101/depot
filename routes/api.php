@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BeatController;
-use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,25 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(AuthController::class)->group(function () {
-    Route::prefix('auth')->group(function () {
-        Route::post('login', 'login');
-        Route::post('register', 'register');
-    });
-});
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::controller(BeatController::class)->group(function () {
-        Route::prefix('beat')->group(function () {
-            Route::post('store', 'create');
-            Route::post('like', 'like');
-        });
-    });
-
-    Route::controller(PostController::class)->group(function () {
-        Route::prefix('post')->group(function () {
-            Route::post('store', 'create');
-            Route::post('like', 'like');
-        });
-    });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
 });
